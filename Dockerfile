@@ -1,9 +1,9 @@
-FROM tomcat:8.0.41-jre8
+FROM tomcat:8.0.43-jre8
 MAINTAINER Eddie Ballisty, eddie.ballisty@blueriver.com
 
 EXPOSE 8888
 
-ENV LUCEE_JARS_URL http://release.lucee.org/rest/update/provider/loader/5.1.3.18
+ENV LUCEE_JARS_URL http://release.lucee.org/rest/update/provider/loader/5.2.1.9
 ENV LUCEE_JAVA_OPTS "-Xms1024m -Xmx1024m"
 
 # Download core JAR, and delete it in one step to avoid committing the installer in a FS layer
@@ -23,13 +23,13 @@ COPY setenv.sh /usr/local/tomcat/bin/
 RUN chmod a+x /usr/local/tomcat/bin/setenv.sh
 
 # Create Lucee configs
-COPY lucee-server.xml /opt/lucee/server/lucee-server/context/lucee-server.xml
-COPY lucee-web.xml.cfm /opt/lucee/web/lucee-web.xml.cfm
+COPY lucee-server.xml /opt/lucee/server/lucee-server/context/
+COPY lucee-web.xml.cfm /opt/lucee/web/
 
 # extensions
-COPY s3-extension-0.9.4.112.lex /opt/lucee/server/lucee-server/deploy/s3-extension-0.9.4.112.lex
-COPY extension-memcached-3.0.2.28.lex /opt/lucee/server/lucee-server/deploy/extension-memcached-3.0.2.28.lex
-COPY extension-loganalyzer-2.3.1.16.lex /opt/lucee/server/lucee-server/deploy/extension-loganalyzer-2.3.1.16.lex
+COPY s3-extension-0.9.4.112.lex /opt/lucee/server/lucee-server/deploy/
+COPY mongodb-extension-3.2.2.54.lex /opt/lucee/server/lucee-server/deploy/
+COPY extension-loganalyzer-2.3.1.16.lex /opt/lucee/server/lucee-server/deploy/
 
 # Provide test page
 RUN mkdir -p /var/www
@@ -38,7 +38,7 @@ ONBUILD RUN rm -rf /var/www/*
 
 # lucee first time startup; explodes lucee and installs bundles/extensions
 RUN /usr/local/tomcat/bin/catalina.sh start && \
-    while [ ! -f "/opt/lucee/web/logs/application.log" ] ; do sleep 2; done && \
+    while [ ! -f "/opt/lucee/web/logs/application.log" ] ; do sleep 30; done && \
     /usr/local/tomcat/bin/catalina.sh stop
 
 # Replace the Trusted SSL Certificates packaged with Lucee with those from Debian
