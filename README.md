@@ -1,20 +1,18 @@
-# Lucee 5.1 on Tomcat (JAR deployment)
+# Lucee 5.2 on Tomcat (JAR deployment)
 
-[![](https://images.microbadger.com/badges/image/lucee/lucee51.svg)](https://microbadger.com/images/lucee/lucee51)
+[![](https://images.microbadger.com/badges/image/lucee/lucee52.svg)](https://microbadger.com/images/lucee/lucee52)
 
 [Lucee](http://www.lucee.org/)  application engine running on [Apache Tomcat 8 JRE8](https://tomcat.apache.org/) J2EE application server.
 
-Latest [Docker images tagged](https://registry.hub.docker.com/u/lucee/lucee-tomcat/tags/manage/) as `latest` on Docker Hub.
-
 For latest stable release:
 ```
-FROM lucee/lucee51:latest
+FROM lucee/lucee52:latest
 ```
 
 _Consider using the compound container with NGINX and Tomcat pre-installed and configured._
 
 ```
-FROM lucee/lucee51-nginx:5.1.2.24
+FROM lucee/lucee52-nginx:5.2.1.9
 ```
 
 ## Features
