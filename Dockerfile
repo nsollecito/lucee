@@ -27,9 +27,13 @@ COPY lucee-server.xml /opt/lucee/server/lucee-server/context/
 COPY lucee-web.xml.cfm /opt/lucee/web/
 
 # extensions
-COPY s3-extension-0.9.4.112.lex /opt/lucee/server/lucee-server/deploy/
+COPY s3-extension-0.9.4.113.lex /opt/lucee/server/lucee-server/deploy/
 COPY mongodb-extension-3.2.2.54.lex /opt/lucee/server/lucee-server/deploy/
 COPY extension-loganalyzer-2.3.1.16.lex /opt/lucee/server/lucee-server/deploy/
+COPY ojdbc7-12.1.0.2.lex /opt/lucee/server/lucee-server/deploy/
+
+# urlrewrite
+COPY urlrewritefilter-4.0.3.jar /usr/local/tomcat/lib/
 
 # Provide test page
 RUN mkdir -p /var/www
@@ -38,7 +42,7 @@ ONBUILD RUN rm -rf /var/www/*
 
 # lucee first time startup; explodes lucee and installs bundles/extensions
 RUN /usr/local/tomcat/bin/catalina.sh start && \
-    while [ ! -f "/opt/lucee/web/logs/application.log" ] ; do sleep 30; done && \
+    while [ ! -f "/opt/lucee/web/logs/application.log" ] ; do sleep 60; done && \
     /usr/local/tomcat/bin/catalina.sh stop
 
 # Replace the Trusted SSL Certificates packaged with Lucee with those from Debian
